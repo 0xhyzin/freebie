@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freebie/core/config/theme/app_color.dart';
 import 'package:freebie/core/config/theme/app_font.dart';
+import 'package:freebie/core/config/theme/app_text_style.dart';
 
 ThemeData getLightTheme() {
   return ThemeData(
@@ -13,11 +14,28 @@ ThemeData getLightTheme() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.p0,
+        padding: EdgeInsetsGeometry.symmetric(vertical: 16, horizontal: 84),
+        backgroundColor: AppColor.p900,
+        foregroundColor: AppColor.p0,
+        textStyle: AppTextStyle.b1m,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(10)
-        )
-      )
-    )
+          borderRadius: BorderRadiusGeometry.circular(10),
+        ),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationThemeData(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColor.error, style: BorderStyle.solid),
+      ),
+    ),
   );
 }

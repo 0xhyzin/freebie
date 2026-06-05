@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freebie/core%20copy/config/theme_data/theme_data_light.dart';
 import 'package:freebie/core/config/theme_data/theme_data_dark.dart';
-import 'package:freebie/features/on_branding/presentation/on_branding.dart';
+import 'package:freebie/core/config/theme_data/theme_data_light.dart';
 import 'package:freebie/features/sing_up/presentation/screens/sing_up.dart';
 
 void main() {

@@ -11,7 +11,11 @@ class SingUp extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: (){}, child: Text("Lol"))
+          ElevatedButton(onPressed: () {}, child: Text("Place Order")),
+          SizedBox(height: 20),
+          TextField(),
+          SizedBox(height: 20),
+          TextField(),
         ],
       ),
     );
