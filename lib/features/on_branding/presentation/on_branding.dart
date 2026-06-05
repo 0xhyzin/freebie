@@ -53,11 +53,11 @@ class OnBranding extends StatelessWidget {
                           fontSize: 20,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                        )
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                       onPressed: () {},
-                      
+
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
