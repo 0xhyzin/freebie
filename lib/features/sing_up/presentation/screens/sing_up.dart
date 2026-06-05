@@ -8,8 +8,10 @@ class SingUp extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
+          ElevatedButton(onPressed: (){}, child: Text("Lol"))
         ],
       ),
     );
