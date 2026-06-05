@@ -73,10 +73,45 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: "General Sans"
+      fonts:
+        - asset: asset/font/general-sans/GeneralSans-Bold.otf
+          weight: 600
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-Semibold.otf
+          weight: 500
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-Medium.otf
+          weight: 400
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-Regular.otf
+          weight: 300
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-Light.otf
+          weight: 200
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-Extralight.otf
+          weight: 100
+          style: normal
+        - asset: asset/font/general-sans/GeneralSans-BoldItalic.otf
+          weight: 600
+          style: italic
+        - asset: asset/font/general-sans/GeneralSans-SemiboldItalic.otf
+          weight: 500
+          style: italic
+        - asset: asset/font/general-sans/GeneralSans-MediumItalic.otf
+          weight: 400
+          style: italic
+        - asset: asset/font/general-sans/GeneralSans-Italic.otf
+          weight: 300
+          style: italic
+        - asset: asset/font/general-sans/GeneralSans-LightItalic.otf
+          weight: 200
+          style: italic
+        - asset: asset/font/general-sans/GeneralSans-ExtralightItalic.otf
+          weight: 100
+          style: italic
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
