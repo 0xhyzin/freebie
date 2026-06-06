@@ -14,7 +14,7 @@ ThemeData getLightTheme() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsetsGeometry.symmetric(vertical: 16, horizontal: 84),
+        padding: EdgeInsetsGeometry.symmetric(vertical: 20, horizontal: 84),
         backgroundColor: AppColor.p900,
         foregroundColor: AppColor.p0,
         textStyle: AppTextStyle.b1m,
@@ -24,6 +24,12 @@ ThemeData getLightTheme() {
       ),
     ),
     inputDecorationTheme: InputDecorationThemeData(
+      
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
+        gapPadding: BorderSide.strokeAlignCenter
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
@@ -33,6 +39,10 @@ ThemeData getLightTheme() {
         borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
       ),
       errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColor.error, style: BorderStyle.solid),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: AppColor.error, style: BorderStyle.solid),
       ),

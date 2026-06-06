@@ -29,9 +29,11 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  email_validator: ^3.0.0
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.4.8
+  font_awesome_flutter: ^11.0.0
   google_fonts: ^8.1.0
 
 dev_dependencies:
@@ -101,6 +103,5 @@ flutter:
         - asset: asset/font/general-sans/GeneralSans-ExtralightItalic.otf
           weight: 100
           style: italic
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

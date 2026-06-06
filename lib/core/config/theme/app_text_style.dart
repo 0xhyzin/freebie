@@ -58,7 +58,7 @@ class AppTextStyle {
   );
   static const TextStyle b1m = TextStyle(
     fontFamily: AppFont.generalSans,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
     fontSize: 16,
     height: 1.4,
