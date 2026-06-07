@@ -14,9 +14,12 @@ ThemeData getLightTheme() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        disabledForegroundColor: AppColor.p0,
+        disabledBackgroundColor: AppColor.p200,
         padding: EdgeInsetsGeometry.symmetric(vertical: 20, horizontal: 84),
         backgroundColor: AppColor.p900,
         foregroundColor: AppColor.p0,
+        elevation: 0,
         textStyle: AppTextStyle.b1m,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(10),

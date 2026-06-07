@@ -8,6 +8,8 @@ class UserInput extends StatefulWidget {
   final String textLabel;
   final String? Function(String?) invokeTypeFunction;
   final String hintInput;
+  final TypeUserInput inputType;
+  final void Function(TypeUserInput, bool) isValidInput;
   bool isPassword;
 
   UserInput({
@@ -15,6 +17,8 @@ class UserInput extends StatefulWidget {
     required this.textLabel,
     required this.invokeTypeFunction,
     required this.hintInput,
+    required this.isValidInput,
+    required this.inputType,
     this.isPassword = false,
   });
 
@@ -45,8 +49,8 @@ class _UserInputState extends State<UserInput> {
           height: 80,
           child: TextFormField(
             enableSuggestions: true,
-            obscureText:widget.isPassword? isObserve:false,
-          
+            obscureText: widget.isPassword ? isObserve : false,
+
             textAlign: TextAlign.start,
             textAlignVertical: TextAlignVertical.center,
             style: AppTextStyle.b1m,
@@ -59,13 +63,16 @@ class _UserInputState extends State<UserInput> {
               setState(() {
                 isValidInput = (result == null) ? true : false;
               });
+              widget.isValidInput(widget.inputType, isValidInput);
               return result;
             },
             decoration: InputDecoration(
               suffixIcon: (widget.isPassword)
                   ? IconButton(
                       onPressed: changeObserve,
-                       icon: isObserve?Icon(Icons.visibility_off):Icon(Icons.visibility),
+                      icon: isObserve
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
                     )
                   : null,
               hint: Text(widget.hintInput, style: AppTextStyle.b1r),

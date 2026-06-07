@@ -13,11 +13,11 @@ class AppColor {
   static const Color p700 = Color(0xff4D4D4D);
   static const Color p800 = Color(0xff333333);
   static const Color p900 = Color(0xff1A1A1A);
+  static const Color facebook = Color(0xff1877F2);
 
   //Success
   static const Color success = Color(0xff0C9409);
 
   //Error
   static const Color error = Color(0xffED1010);
-
 }
