@@ -122,4 +122,10 @@ class AppTextStyle {
     height: 1.4,
     letterSpacing: 0,
   );
+  static const TextStyle underLine = TextStyle(
+    decoration: TextDecoration.underline,
+    decorationStyle: TextDecorationStyle.solid,
+    color: Colors.black,
+    fontWeight: FontWeight.w500,
+  );
 }

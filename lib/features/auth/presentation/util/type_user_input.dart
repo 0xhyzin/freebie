@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 
-enum TypeUserInput { fullName, email, password }
+enum TypeUserInput { fullName, email, password, confirmPassword }
 
 String? validateEmail(String? email) {
   sharedValidate(email, "Please enter  email address");
@@ -22,6 +22,17 @@ String? validatePassword(String? password) {
   sharedValidate(password, "Please enter Password");
   if (password!.length < 6) {
     return "Please Enter Strong Password";
+  }
+  return null;
+}
+
+String? validateConfirmPassword(String? confirmPassword, String? password) {
+  sharedValidate(confirmPassword, "Please enter Password");
+  sharedValidate(password, "Please enter Password First");
+  if (password!.length < 6) {
+    return "Please Enter Strong Password";
+  } else if (password != confirmPassword) {
+    return "Enter a confirm password that matches your password.";
   }
   return null;
 }

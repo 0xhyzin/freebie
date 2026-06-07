@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freebie/core/config/theme_data/theme_data_dark.dart';
 import 'package:freebie/core/config/theme_data/theme_data_light.dart';
-import 'package:freebie/features/sing_up/presentation/screens/sing_up.dart';
+import 'package:freebie/features/on_branding/presentation/on_branding.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: MainApp(),
-      debugShowCheckedModeBanner: false,
-      theme: getLightTheme(),
-      darkTheme: getDarkTheme(),
-      themeMode: ThemeMode.light,
-    ),
-  );
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -20,6 +12,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SingUp(), backgroundColor: Colors.white);
+    return MaterialApp(
+      home: OnBranding(),
+      debugShowCheckedModeBanner: false,
+      theme: getLightTheme(),
+      darkTheme: getDarkTheme(),
+      themeMode: ThemeMode.light,
+    );
   }
 }

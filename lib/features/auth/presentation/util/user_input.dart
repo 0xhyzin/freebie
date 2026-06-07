@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:freebie/core/config/theme/app_color.dart';
 import 'package:freebie/core/config/theme/app_text_style.dart';
-import 'package:freebie/shared/utils/type_user_input.dart';
+import 'package:freebie/features/auth/presentation/util/input_type.dart';
+import 'package:freebie/features/auth/presentation/util/type_user_input.dart';
 
 class UserInput extends StatefulWidget {
   final String textLabel;
   final String? Function(String?) invokeTypeFunction;
   final String hintInput;
+  final void Function(bool, TypeUserInput) isValidInput;
+  final TextEditingController controller;
   final TypeUserInput inputType;
-  final void Function(TypeUserInput, bool) isValidInput;
   bool isPassword;
 
   UserInput({
@@ -18,6 +20,7 @@ class UserInput extends StatefulWidget {
     required this.invokeTypeFunction,
     required this.hintInput,
     required this.isValidInput,
+    required this.controller,
     required this.inputType,
     this.isPassword = false,
   });
@@ -28,7 +31,10 @@ class UserInput extends StatefulWidget {
 
 class _UserInputState extends State<UserInput> {
   bool isValidInput = false;
+  String? errorResult;
+
   bool isFirst = true;
+
   bool isObserve = true;
 
   void changeObserve() {
@@ -37,34 +43,40 @@ class _UserInputState extends State<UserInput> {
     });
   }
 
+  void checkIsValid(String value) {
+    isFirst = false;
+    errorResult = widget.invokeTypeFunction(value);
+    setState(() {
+      isValidInput = (errorResult == null) ? true : false;
+    });
+    widget.isValidInput(isValidInput, widget.inputType);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(widget.textLabel, style: AppTextStyle.b1m),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
         SizedBox(
           width: double.infinity,
-          height: 80,
+          height: 85,
           child: TextFormField(
+            controller: widget.controller,
             enableSuggestions: true,
             obscureText: widget.isPassword ? isObserve : false,
 
             textAlign: TextAlign.start,
             textAlignVertical: TextAlignVertical.center,
             style: AppTextStyle.b1m,
-            autovalidateMode: AutovalidateMode.onUnfocus,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+
+            onChanged: (value) => checkIsValid(value),
+
             validator: (value) {
-              setState(() {
-                isFirst = false;
-              });
-              String? result = widget.invokeTypeFunction(value);
-              setState(() {
-                isValidInput = (result == null) ? true : false;
-              });
-              widget.isValidInput(widget.inputType, isValidInput);
-              return result;
+              return errorResult;
             },
             decoration: InputDecoration(
               suffixIcon: (widget.isPassword)
@@ -90,7 +102,7 @@ class _UserInputState extends State<UserInput> {
                     : FaIcon(
                         FontAwesomeIcons.circleXmark,
                         color: AppColor.error,
-                        size: 24,
+                        size: 20,
                       ),
               ),
               border: OutlineInputBorder(

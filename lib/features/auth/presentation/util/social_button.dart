@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:freebie/core/config/theme/app_color.dart';
 
-class ButtonSocialLogin extends StatelessWidget {
+class SocialButton extends StatelessWidget {
   final String iconPath;
   final String textUsing;
   final Color? backgroundColor;
   final Color? fontColor;
   final bool withIdge;
-  const ButtonSocialLogin({
+  const SocialButton({
     super.key,
     required this.iconPath,
     required this.textUsing,

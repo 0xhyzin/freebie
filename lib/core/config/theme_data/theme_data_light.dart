@@ -26,12 +26,15 @@ ThemeData getLightTheme() {
         ),
       ),
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColor.p0,
+      iconTheme: IconThemeData(size: 30),
+    ),
     inputDecorationTheme: InputDecorationThemeData(
-      
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: AppColor.p100, style: BorderStyle.solid),
-        gapPadding: BorderSide.strokeAlignCenter
+        gapPadding: BorderSide.strokeAlignCenter,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
