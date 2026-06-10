@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freebie/core/config/theme/app_color.dart';
 import 'package:freebie/core/config/theme/app_font.dart';
 
 class AppTextStyle {
@@ -127,5 +128,23 @@ class AppTextStyle {
     decorationStyle: TextDecorationStyle.solid,
     color: Colors.black,
     fontWeight: FontWeight.w500,
+  );
+  static const TextStyle email = TextStyle(
+    fontFamily: AppFont.generalSans,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+    fontSize: 16,
+    height: 1.4,
+    letterSpacing: 0,
+    color: AppColor.p900,
+  );
+  static const TextStyle b1WithColor = TextStyle(
+    fontFamily: AppFont.generalSans,
+    fontWeight: FontWeight.w300,
+    fontStyle: FontStyle.normal,
+    fontSize: 16,
+    height: 1.4,
+    letterSpacing: 0,
+    color: AppColor.p900,
   );
 }

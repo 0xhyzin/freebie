@@ -10,8 +10,8 @@ class AuthEnterDigitCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainAuthLayout(
       title: "Enter 4 Digit Code",
-      subTitle:
-          "Enter 4 digit code that your receive on your email (${email}).",
+      subTitle: "Enter 4 digit code that your receive on your email.",
+      email: email,
       page: AuthPageType.enterDigit,
       buttonTitle: "Continue",
       withResetPassword: false,

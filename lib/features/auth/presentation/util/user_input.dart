@@ -9,8 +9,8 @@ class UserInput extends StatefulWidget {
   final String textLabel;
   final String? Function(String?) invokeTypeFunction;
   final String hintInput;
-  final void Function(bool, TypeUserInput) isValidInput;
   final TextEditingController controller;
+  final Function() checkIsValid;
   final TypeUserInput inputType;
   bool isPassword;
 
@@ -19,8 +19,8 @@ class UserInput extends StatefulWidget {
     required this.textLabel,
     required this.invokeTypeFunction,
     required this.hintInput,
-    required this.isValidInput,
     required this.controller,
+    required this.checkIsValid,
     required this.inputType,
     this.isPassword = false,
   });
@@ -49,7 +49,7 @@ class _UserInputState extends State<UserInput> {
     setState(() {
       isValidInput = (errorResult == null) ? true : false;
     });
-    widget.isValidInput(isValidInput, widget.inputType);
+    widget.checkIsValid();
   }
 
   @override
@@ -74,6 +74,7 @@ class _UserInputState extends State<UserInput> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
 
             onChanged: (value) => checkIsValid(value),
+
 
             validator: (value) {
               return errorResult;

@@ -5,6 +5,7 @@ import 'package:freebie/features/auth/presentation/util/auth_page_type.dart';
 import 'package:freebie/features/auth/presentation/util/list_auth_input.dart';
 import 'package:freebie/features/auth/presentation/util/type_user_input.dart';
 import 'package:freebie/features/auth/presentation/util/user_input.dart';
+import 'package:freebie/features/auth/presentation/widget/enter_digit.dart';
 import 'package:freebie/features/auth/presentation/widget/policy.dart';
 import 'package:freebie/features/auth/presentation/widget/reset_password.dart';
 import 'package:freebie/features/auth/presentation/widget/social_auth.dart';
@@ -18,12 +19,14 @@ class MainAuthLayout extends StatefulWidget {
   final bool withSocialLocgin;
   final bool withPolicy;
   final bool withResetPassword;
+  final String email;
   const MainAuthLayout({
     super.key,
     required this.title,
     required this.subTitle,
     required this.buttonTitle,
     required this.page,
+    this.email = "",
     this.withSocialLocgin = false,
     this.withPolicy = false,
     this.withResetPassword = false,
@@ -37,61 +40,21 @@ class _MainAuthLayoutState extends State<MainAuthLayout> {
   @override
   void initState() {
     clearAllController();
-    _isFullNameValid = false;
-    _isEmailValid = false;
-    _isPasswordValid = false;
-    _isConfirmPasswordValid = false;
 
     _isFormValid = false;
     super.initState();
   }
 
-  bool _isFullNameValid = false;
-  bool _isEmailValid = false;
-  bool _isPasswordValid = false;
-  bool _isConfirmPasswordValid = false;
-
-  bool _isFormValid = false;
-
-  void makeInputValid(bool value, TypeUserInput type) {
-    switch (type) {
-      case TypeUserInput.fullName:
-        _isFullNameValid = value;
-        break;
-      case TypeUserInput.email:
-        _isEmailValid = value;
-        break;
-      case TypeUserInput.password:
-        _isPasswordValid = value;
-        break;
-      case TypeUserInput.confirmPassword:
-        _isConfirmPasswordValid = value;
-        break;
-    }
-
+  void isFormValid() {
     setState(() {
-      switch (widget.page) {
-        case AuthPageType.singUp:
-          _isFormValid =
-              (_isFullNameValid && _isEmailValid && _isPasswordValid);
-          break;
-        case AuthPageType.login:
-          _isFormValid = (_isEmailValid && _isPasswordValid);
-          break;
-        case AuthPageType.forgotPassword:
-          _isFormValid = (_isEmailValid);
-          break;
-        case AuthPageType.enterDigit:
-          _isFormValid = true;
-          break;
-        case AuthPageType.resetPassword:
-          _isFormValid = (_isConfirmPasswordValid && _isPasswordValid);
-          break;
-      }
+      _isFormValid = _formKey.currentState!.validate();
     });
   }
 
-  @override
+  bool _isFormValid = false;
+
+  final _formKey = GlobalKey<FormState>();
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
@@ -120,21 +83,42 @@ class _MainAuthLayoutState extends State<MainAuthLayout> {
                 padding: EdgeInsetsGeometry.only(top: 10, bottom: 10),
                 child: Text(widget.title, style: AppTextStyle.h2sb),
               ),
-              Text(widget.subTitle, style: AppTextStyle.b1r),
+
+              widget.page == AuthPageType.enterDigit
+                  ? RichText(
+                      text: TextSpan(
+                        style: AppTextStyle.b1WithColor,
+                        children: [
+                          TextSpan(text: widget.subTitle),
+                          TextSpan(
+                            text: "(${widget.email})",
+                            style: AppTextStyle.email,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Text(widget.subTitle, style: AppTextStyle.b1r),
               SizedBox(height: 10),
-              Column(
-                children: listInputForEachPage[widget.page]!.map((input) {
-                  return UserInput(
-                    textLabel: input.label,
-                    invokeTypeFunction: input.invokeTypeFunction,
-                    hintInput: input.hintText,
-                    isValidInput: makeInputValid,
-                    inputType: input.typeInput,
-                    controller: input.controller,
-                    isPassword: input.isPassword,
-                  );
-                }).toList(),
-              ),
+              widget.page == AuthPageType.enterDigit
+                  ? EnterDigit()
+                  : Form(
+                      key: _formKey,
+                      child: Column(
+                        children: listInputForEachPage[widget.page]!.map((
+                          input,
+                        ) {
+                          return UserInput(
+                            textLabel: input.label,
+                            invokeTypeFunction: input.invokeTypeFunction,
+                            hintInput: input.hintText,
+                            checkIsValid: isFormValid,
+                            inputType: input.typeInput,
+                            controller: input.controller,
+                            isPassword: input.isPassword,
+                          );
+                        }).toList(),
+                      ),
+                    ),
               widget.withPolicy ? Policy() : SizedBox(height: 1),
               widget.withResetPassword ? ResetPassword() : SizedBox(height: 1),
               SizedBox(height: 20),
