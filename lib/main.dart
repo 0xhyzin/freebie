@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freebie/core/config/theme_data/theme_data_dark.dart';
 import 'package:freebie/core/config/theme_data/theme_data_light.dart';
 import 'package:freebie/features/on_branding/presentation/on_branding.dart';
 
+
 void main() {
-  runApp(MainApp());
+  runApp(ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {

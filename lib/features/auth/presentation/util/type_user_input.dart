@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 
-enum TypeUserInput { fullName, email, password, confirmPassword }
+enum TypeUserInput { fullName, email, password, confirmPassword,digit }
 
 String? validateEmail(String? email) {
   sharedValidate(email, "Please enter  email address");
