@@ -3,61 +3,41 @@ import 'package:freebie/features/auth/presentation/util/input_type.dart';
 import 'package:freebie/features/auth/presentation/util/type_user_input.dart';
 
 InputType fullName = InputType(
-  "Full Name",
-  "Enter your full name",
-  false,
-  TypeUserInput.fullName,
-  validateUserName,
+  label: "Full Name",
+  hintText: "Enter your full name",
+  typeInput: TypeUserInput.fullName,
+  invokeTypeFunction: validateUserName,
 );
+
 InputType email = InputType(
-  "Email",
-  "Enter your email address",
-  false,
-  TypeUserInput.email,
-  validateEmail,
+  label: "Email",
+  hintText: "Enter your email address",
+  typeInput: TypeUserInput.email,
+  invokeTypeFunction: validateEmail,
 );
+
 InputType password = InputType(
-  "Password",
-  "Enter your password",
-  true,
-  TypeUserInput.password,
-  validatePassword,
+  label: "Password",
+  hintText: "Enter your password",
+  isPassword: true,
+  typeInput: TypeUserInput.password,
+  invokeTypeFunction: validatePassword,
 );
+
 InputType confirmPassword = InputType(
-  "Confirm Password",
-  "Enter your Confirm password",
-  true,
-  TypeUserInput.password,
-  validatePassword,
+  label: "Confirm Password",
+  hintText: "Enter your Confirm password",
+  isConfirmPassword: true,
+  isPassword: true,
+  typeInput: TypeUserInput.confirmPassword,
+  invokeTypeFunction: validatePassword,
 );
-InputType digit1 = InputType(
-  "",
-  "",
-  false,
-  TypeUserInput.digit,
-  validatePassword,
-);
-InputType digit2 = InputType(
-  "",
-  "",
-  false,
-  TypeUserInput.digit,
-  validatePassword,
-);
-InputType digit3 = InputType(
-  "",
-  "",
-  false,
-  TypeUserInput.digit,
-  validatePassword,
-);
-InputType digit4 = InputType(
-  "",
-  "",
-  false,
-  TypeUserInput.digit,
-  validatePassword,
-);
+
+InputType digit1 = InputType(typeInput: TypeUserInput.digit);
+InputType digit2 = InputType(typeInput: TypeUserInput.digit);
+InputType digit3 = InputType(typeInput: TypeUserInput.digit);
+InputType digit4 = InputType(typeInput: TypeUserInput.digit);
+
 void clearAllController() {
   listInputForEachPage.forEach((page, inputs) {
     for (var input in inputs) {
@@ -72,4 +52,14 @@ Map<AuthPageType, List<InputType>> listInputForEachPage = {
   AuthPageType.forgotPassword: [email],
   AuthPageType.resetPassword: [password, confirmPassword],
   AuthPageType.enterDigit: [digit1, digit2, digit3, digit4],
+  AuthPageType.allScreens: [
+    fullName,
+    email,
+    password,
+    confirmPassword,
+    digit1,
+    digit2,
+    digit3,
+    digit4,
+  ],
 };

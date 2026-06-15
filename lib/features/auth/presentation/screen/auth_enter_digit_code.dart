@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:freebie/features/auth/presentation/screen/auth_enter_new_passowrd.dart';
 import 'package:freebie/features/auth/presentation/util/auth_page_type.dart';
 import 'package:freebie/features/auth/presentation/util/digit_input.dart';
 import 'package:freebie/features/auth/presentation/util/list_auth_input.dart';
 import 'package:freebie/features/auth/presentation/util/user_input.dart';
 import 'package:freebie/features/auth/presentation/widget/main_auth_layout.dart';
+import 'package:freebie/features/home/screens/home_screen.dart';
 
 class AuthEnterDigitCode extends StatefulWidget {
   final String email;
-  const AuthEnterDigitCode({super.key, required this.email});
+  final bool isSingUp;
+  const AuthEnterDigitCode({
+    super.key,
+    required this.email,
+    required this.isSingUp,
+  });
 
   @override
   State<AuthEnterDigitCode> createState() => _AuthEnterDigitCodeState();
@@ -37,13 +44,6 @@ class _AuthEnterDigitCodeState extends State<AuthEnterDigitCode> {
               .text
               .isNotEmpty);
     });
-  }
-
-  @override
-  void initState() {
-    clearAllController();
-    isValid = false;
-    super.initState();
   }
 
   @override
@@ -85,10 +85,26 @@ class _AuthEnterDigitCodeState extends State<AuthEnterDigitCode> {
             ElevatedButton(
               onPressed: (isValid)
                   ? () {
-                      _formKey.currentState!.validate();
+                      if (_formKey.currentState!.validate()) {
+                        if (widget.isSingUp) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => HomeScreen(),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AuthEnterNewPassowrd(),
+                            ),
+                          );
+                        }
+                      }
                     }
                   : null,
-              child: Text("Send Code"),
+              child: Text("Continue"),
             ),
           ],
         ),

@@ -10,20 +10,24 @@ class UserInput extends ConsumerStatefulWidget {
   final String textLabel;
   final String hintInput;
   final Function onChangeInput;
-  final String? Function(String?) invokeTypeFunction;
+  final String? Function(String?)? invokeTypeFunction;
   final TextEditingController controller;
   final TypeUserInput typeInput;
   final bool isPassword;
+  final bool isConfirmPassword;
+  final String? Function()? isValidConfirmPassword;
 
   const UserInput({
     super.key,
     required this.textLabel,
-    required this.invokeTypeFunction,
+    this.invokeTypeFunction,
     required this.hintInput,
     required this.controller,
     required this.onChangeInput,
     required this.typeInput,
+    this.isValidConfirmPassword,
     this.isPassword = false,
+    this.isConfirmPassword = false,
   });
 
   @override
@@ -78,7 +82,12 @@ class _UserInputState extends ConsumerState<UserInput> {
               ref
                   .read(inputFirstProviderNotifier(widget.typeInput).notifier)
                   .makeInputValid(true);
-              errorResult = widget.invokeTypeFunction(value);
+
+              if (widget.isConfirmPassword) {
+                errorResult = widget.isValidConfirmPassword!();
+              } else if (widget.typeInput != TypeUserInput.digit) {
+                errorResult = widget.invokeTypeFunction!(value);
+              }
               ref
                   .read(inputProviderNotifier(widget.typeInput).notifier)
                   .makeInputValid((errorResult == null) ? true : false);

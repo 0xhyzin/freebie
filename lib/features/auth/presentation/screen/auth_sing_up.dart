@@ -7,6 +7,7 @@ import 'package:freebie/features/auth/presentation/util/auth_page_type.dart';
 import 'package:freebie/features/auth/presentation/util/input_type.dart';
 import 'package:freebie/features/auth/presentation/util/list_auth_input.dart';
 import 'package:freebie/features/auth/presentation/util/or_divider.dart';
+import 'package:freebie/features/auth/presentation/util/reset_inputs.dart';
 import 'package:freebie/features/auth/presentation/util/user_input.dart';
 import 'package:freebie/features/auth/presentation/widget/main_auth_layout.dart';
 import 'package:freebie/features/auth/presentation/widget/social_auth.dart';
@@ -82,38 +83,22 @@ class _AuthSingUpState extends ConsumerState<AuthSingUp> {
                 onPressed: (isValid)
                     ? () {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.push(
+                          String email =
+                              listInputForEachPage[AuthPageType.singUp]![1]
+                                  .controller
+                                  .text;
+                          resetInputs(ref, _formKey);
+
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (_) => AuthEnterDigitCode(
-                                email:
-                                    listInputForEachPage[AuthPageType
-                                            .singUp]![1]
-                                        .controller
-                                        .text,
+                                email: email,
+                                isSingUp: true,
                               ),
                             ),
-                          ).then((_) {
-                            for (InputType inputType
-                                in listInputForEachPage[AuthPageType.singUp]!) {
-                              ref
-                                  .read(
-                                    inputProviderNotifier(
-                                      inputType.typeInput,
-                                    ).notifier,
-                                  )
-                                  .makeInputValid(false);
-                              ref
-                                  .read(
-                                    inputFirstProviderNotifier(
-                                      inputType.typeInput,
-                                    ).notifier,
-                                  )
-                                  .makeInputValid(false);
-                            }
-                            _formKey.currentState!.reset();
-                            clearAllController();
-                          });
+                            (r) => false,
+                          );
                         }
                       }
                     : null,

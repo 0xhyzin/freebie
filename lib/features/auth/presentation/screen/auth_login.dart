@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freebie/features/auth/presentation/util/auth_page_type.dart';
 import 'package:freebie/features/auth/presentation/util/list_auth_input.dart';
+import 'package:freebie/features/auth/presentation/util/reset_inputs.dart';
 import 'package:freebie/features/auth/presentation/util/user_input.dart';
 import 'package:freebie/features/auth/presentation/widget/main_auth_layout.dart';
 import 'package:freebie/features/auth/presentation/widget/reset_password.dart';
 import 'package:freebie/features/auth/presentation/widget/social_auth.dart';
+import 'package:freebie/features/home/screens/home_screen.dart';
 
-class AuthLogin extends StatefulWidget {
+class AuthLogin extends ConsumerStatefulWidget {
   const AuthLogin({super.key});
 
   @override
-  State<AuthLogin> createState() => _AuthLoginState();
+  ConsumerState<AuthLogin> createState() => _AuthLoginState();
 }
 
-class _AuthLoginState extends State<AuthLogin> {
+class _AuthLoginState extends ConsumerState<AuthLogin> {
   final _formKey = GlobalKey<FormState>();
   bool isValid = false;
 
@@ -81,7 +84,14 @@ class _AuthLoginState extends State<AuthLogin> {
               ElevatedButton(
                 onPressed: (isValid)
                     ? () {
-                        _formKey.currentState!.validate();
+                        if (_formKey.currentState!.validate())
+                          resetInputs(ref, _formKey);
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => HomeScreen()),
+                          (r) => false,
+                        );
                       }
                     : null,
                 child: Text("Login"),

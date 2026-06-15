@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freebie/features/auth/presentation/provider/input_state_provider.dart';
+import 'package:freebie/core/config/theme/app_text_style.dart';
 import 'package:freebie/features/auth/presentation/screen/auth_enter_digit_code.dart';
+import 'package:freebie/features/auth/presentation/screen/auth_login.dart';
 import 'package:freebie/features/auth/presentation/util/auth_page_type.dart';
 import 'package:freebie/features/auth/presentation/util/input_type.dart';
 import 'package:freebie/features/auth/presentation/util/list_auth_input.dart';
@@ -10,33 +11,39 @@ import 'package:freebie/features/auth/presentation/util/reset_inputs.dart';
 import 'package:freebie/features/auth/presentation/util/type_user_input.dart';
 import 'package:freebie/features/auth/presentation/util/user_input.dart';
 import 'package:freebie/features/auth/presentation/widget/main_auth_layout.dart';
-import 'package:freebie/features/auth/presentation/widget/social_auth.dart';
+import 'package:freebie/shared/widgets/dialog_done.dart';
 
-class AuthForgotPassword extends ConsumerStatefulWidget {
-  const AuthForgotPassword({super.key});
+class AuthEnterNewPassowrd extends ConsumerStatefulWidget {
+  const AuthEnterNewPassowrd({super.key});
 
   @override
-  ConsumerState<AuthForgotPassword> createState() => _AuthForgotPasswordState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AuthEnterNewPassowrdState();
 }
 
-class _AuthForgotPasswordState extends ConsumerState<AuthForgotPassword> {
+class _AuthEnterNewPassowrdState extends ConsumerState<AuthEnterNewPassowrd> {
   final _formKey = GlobalKey<FormState>();
   bool isValid = false;
 
   void onChange() {
     setState(() {
-      isValid = (listInputForEachPage[AuthPageType.login]![0]
-          .controller
-          .text
-          .isNotEmpty);
+      isValid =
+          (listInputForEachPage[AuthPageType.resetPassword]![0]
+              .controller
+              .text
+              .isNotEmpty &&
+          listInputForEachPage[AuthPageType.resetPassword]![1]
+              .controller
+              .text
+              .isNotEmpty);
     });
   }
 
-  @override
-  void initState() {
-    clearAllController();
-    isValid = false;
-    super.initState();
+  String? isValidPassowrd() {
+    return validateConfirmPassword(
+      listInputForEachPage[AuthPageType.resetPassword]![0].controller.text,
+      listInputForEachPage[AuthPageType.resetPassword]![1].controller.text,
+    );
   }
 
   @override
@@ -48,21 +55,21 @@ class _AuthForgotPasswordState extends ConsumerState<AuthForgotPassword> {
           left: 20,
           right: 20,
           top: 0,
-          bottom: 40,
+          bottom: 30,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MainAuthLayout(
-              title: "Forgot password",
+              title: "Reset Password",
               subTitle:
-                  "Enter your email for the verification process. We will send 4 digits code to your email.",
+                  "Set the new password for your account so you can login and access all the features.",
               page: AuthPageType.forgotPassword,
             ),
             Form(
               key: _formKey,
               child: Column(
-                children: listInputForEachPage[AuthPageType.forgotPassword]!
+                children: listInputForEachPage[AuthPageType.resetPassword]!
                     .map(
                       (i) => UserInput(
                         typeInput: i.typeInput,
@@ -71,36 +78,45 @@ class _AuthForgotPasswordState extends ConsumerState<AuthForgotPassword> {
                         invokeTypeFunction: i.invokeTypeFunction,
                         controller: i.controller,
                         isPassword: i.isPassword,
+                        isConfirmPassword: i.isConfirmPassword,
                         onChangeInput: onChange,
+                        isValidConfirmPassword: isValidPassowrd,
                       ),
                     )
                     .toList(),
               ),
             ),
-            SizedBox(height: 20),
             Expanded(child: SizedBox()),
             ElevatedButton(
               onPressed: (isValid)
                   ? () {
                       if (_formKey.currentState!.validate()) {
                         resetInputs(ref, _formKey);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AuthEnterDigitCode(
-                              isSingUp: false,
-                              email:
-                                  listInputForEachPage[AuthPageType
-                                          .forgotPassword]![0]
-                                      .controller
-                                      .text,
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: DialogDone(
+                              title: "Password Changed!",
+                              message:
+                                  "Your can now use your new password to login to your account.",
+                              buttonTitle: "Login",
+                              buttonFunction: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => AuthLogin(),
+                                  ),
+                                ).then((_) {
+                                  resetInputs(ref, _formKey);
+                                });
+                              },
                             ),
                           ),
                         );
                       }
                     }
                   : null,
-              child: Text("Send Code"),
+              child: Text("Continue"),
             ),
           ],
         ),
@@ -108,11 +124,3 @@ class _AuthForgotPasswordState extends ConsumerState<AuthForgotPassword> {
     );
   }
 }
-
-
-//MainAuthLayout(
- //     title: "Forgot password",
-  //    subTitle:
-   //       "Enter your email for the verification process. We will send 4 digits code to your email.",
-    //  page: AuthPageType.forgotPassword,
-   // );

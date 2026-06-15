@@ -3,5 +3,6 @@ enum AuthPageType {
   login,
   forgotPassword,
   enterDigit,
-  resetPassword
+  resetPassword,
+  allScreens
 }
